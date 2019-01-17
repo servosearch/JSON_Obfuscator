@@ -6,11 +6,15 @@ import json
 def unicode_8bit(ch): #Changing decimal Unicode code point to 8-bit.
     return '\\u{:04x}'.format(ord(ch)) 
 
-fileName = input('Please enter the name of input file below (w/o extension): \n')
-# fileName='input'
-with open('%s.json' % fileName, 'r') as j:
-    rawData = json.dumps((json.load(j)), sort_keys=False,indent=4) #Json conversion to string
-
+while True:
+    try:
+        fileName = input('Please enter the name of input file below (w/o extension): \n')
+        with open('%s.json' % fileName, 'r') as j:
+            rawData = json.dumps((json.load(j)), sort_keys=False,indent=4) #Json conversion to string
+        break
+    except FileNotFoundError:
+        print('File does not exist, please check the spelling and try again')
+        continue
 #Lets try regex
 result = re.findall("\"([^\"]*)\"", rawData) #List of strigs
 
